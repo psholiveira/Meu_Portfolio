@@ -1,3 +1,7 @@
+// src/data/projects.ts
+
+export type ProjectTag = string;
+
 export type Project = {
   slug: string;
   title: string;
@@ -5,7 +9,7 @@ export type Project = {
   longDescription: string;
   role?: string;
   year?: string;
-  tags:  readonly string[];
+  tags: readonly ProjectTag[];
   highlights: string[];
   links: {
     demo?: string;
@@ -29,6 +33,7 @@ export const projects: Project[] = [
       "UI responsiva e acessível",
     ],
     links: {
+      // Troque pelos links reais quando tiver
       demo: "https://seu-demo.vercel.app",
       repo: "https://github.com/seuusuario/task-board",
     },
@@ -48,8 +53,27 @@ export const projects: Project[] = [
       "Performance e boas práticas de UI",
     ],
     links: {
+      // Troque pelos links reais quando tiver
       demo: "https://seu-demo.vercel.app",
       repo: "https://github.com/seuusuario/landing-page",
     },
   },
 ];
+
+// Helpers (fonte única)
+export const projectSlugs = projects.map((p) => p.slug);
+
+export function getProjectBySlug(slug: string) {
+  return projects.find((p) => p.slug === slug) ?? null;
+}
+
+// Validações simples em DEV (evita bug silencioso)
+if (process.env.NODE_ENV !== "production") {
+  const seen = new Set<string>();
+  for (const p of projects) {
+    if (seen.has(p.slug)) {
+      throw new Error(`Slug duplicado em projects.ts: "${p.slug}"`);
+    }
+    seen.add(p.slug);
+  }
+}

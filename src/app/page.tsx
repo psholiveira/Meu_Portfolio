@@ -1,3 +1,7 @@
+// src/app/page.tsx
+
+import type { Metadata } from "next";
+
 import Section from "@/components/Section";
 import ProjectCard from "@/components/ProjectCard";
 import SubCard from "@/components/SubCard";
@@ -7,6 +11,12 @@ import Skills from "@/components/Skills";
 import { projects } from "@/data/projects";
 import { FadeInView, PageEnter, StaggerInView, StaggerItem } from "@/components/Motion";
 import { Code, GraduationCap, Sparkles } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Pedro Santos | Full Stack Developer",
+  description:
+    "Portfólio de Pedro Santos. Desenvolvimento full stack com foco em produto, APIs bem definidas e interfaces modernas.",
+};
 
 export default function Home() {
   return (
@@ -61,12 +71,7 @@ export default function Home() {
 
             {/* Coluna foto */}
             <div className="lg:col-span-5 lg:flex lg:items-start lg:justify-end">
-              <ProfileCard
-                name="Pedro Santos"
-                role="Full Stack Developer"
-                location="Brasil"
-                imageSrc="/me.png"
-              />
+              <ProfileCard name="Pedro Santos" role="Full Stack Developer" location="Brasil" imageSrc="/me.png" />
             </div>
           </div>
         </section>
