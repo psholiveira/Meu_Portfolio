@@ -7,6 +7,8 @@ import ProjectsSection from "@/components/home/ProjectsSection";
 import SkillsSection from "@/components/home/SkillsSection";
 import AboutSection from "@/components/home/AboutSection";
 import ContactSection from "@/components/home/ContactSection";
+import SeoPerson from "@/components/SeoPerson";
+
 
 export const metadata: Metadata = {
   title: "Pedro Santos | Full Stack Developer",
@@ -22,6 +24,7 @@ export default function Home() {
       <SkillsSection />
       <AboutSection />
       <ContactSection />
+      <SeoPerson />
     </PageEnter>
   );
 }

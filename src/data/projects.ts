@@ -33,9 +33,9 @@ export const projects: Project[] = [
       "UI responsiva e acessível",
     ],
     links: {
-      // Troque pelos links reais quando tiver
-      demo: "https://seu-demo.vercel.app",
-      repo: "https://github.com/seuusuario/task-board",
+      // Recomendo preencher apenas com links reais
+      // demo: "https://...",
+      // repo: "https://github.com/...",
     },
   },
   {
@@ -53,9 +53,8 @@ export const projects: Project[] = [
       "Performance e boas práticas de UI",
     ],
     links: {
-      // Troque pelos links reais quando tiver
-      demo: "https://seu-demo.vercel.app",
-      repo: "https://github.com/seuusuario/landing-page",
+      // demo: "https://...",
+      // repo: "https://github.com/...",
     },
   },
 ];
@@ -67,13 +66,58 @@ export function getProjectBySlug(slug: string) {
   return projects.find((p) => p.slug === slug) ?? null;
 }
 
-// Validações simples em DEV (evita bug silencioso)
+// Validações em DEV (evita bug silencioso)
 if (process.env.NODE_ENV !== "production") {
   const seen = new Set<string>();
+  const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
   for (const p of projects) {
+    // slug único
     if (seen.has(p.slug)) {
       throw new Error(`Slug duplicado em projects.ts: "${p.slug}"`);
     }
     seen.add(p.slug);
+
+    // slug válido (kebab-case)
+    if (!slugRegex.test(p.slug)) {
+      throw new Error(
+        `Slug inválido em projects.ts: "${p.slug}". Use kebab-case (ex: "meu-projeto").`
+      );
+    }
+
+    // campos essenciais
+    if (!p.title?.trim()) {
+      throw new Error(`Projeto "${p.slug}" está sem title.`);
+    }
+
+    if (!p.description?.trim()) {
+      throw new Error(`Projeto "${p.slug}" está sem description.`);
+    }
+
+    if (!p.longDescription?.trim()) {
+      throw new Error(`Projeto "${p.slug}" está sem longDescription.`);
+    }
+
+    // highlights não vazio (melhora página de detalhe)
+    if (!Array.isArray(p.highlights) || p.highlights.length === 0) {
+      throw new Error(`Projeto "${p.slug}" precisa de pelo menos 1 highlight.`);
+    }
+
+    // tags não vazio (opcional mas recomendado)
+    if (!Array.isArray(p.tags) || p.tags.length === 0) {
+      throw new Error(`Projeto "${p.slug}" precisa de pelo menos 1 tag.`);
+    }
+
+    // links válidos (se existirem)
+    if (p.links.demo && !p.links.demo.startsWith("http")) {
+      throw new Error(
+        `Link demo inválido no projeto "${p.slug}". Deve começar com http/https.`
+      );
+    }
+    if (p.links.repo && !p.links.repo.startsWith("http")) {
+      throw new Error(
+        `Link repo inválido no projeto "${p.slug}". Deve começar com http/https.`
+      );
+    }
   }
 }

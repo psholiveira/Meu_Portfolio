@@ -20,9 +20,23 @@ export const metadata: Metadata = {
   },
   description: siteDescription,
 
+  alternates: {
+    canonical: siteUrl,
+  },
+
   applicationName: siteTitle,
   authors: [{ name: siteName }],
   creator: siteName,
+
+  keywords: [
+    "Pedro Santos",
+    "Desenvolvedor Full Stack",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Node.js",
+    "Portfólio",
+  ],
 
   robots: {
     index: true,
@@ -44,7 +58,7 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [
       {
-        url: "/opengraph-image",
+        url: "/opengraph-image.png",
         width: 1200,
         height: 630,
         alt: "Pedro Santos — Portfólio",
@@ -57,13 +71,15 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
-    images: ["/opengraph-image"],
+    images: ["/opengraph-image.png"],
   },
 
   icons: {
     icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
 };
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
