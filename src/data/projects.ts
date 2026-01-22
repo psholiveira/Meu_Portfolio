@@ -1,6 +1,7 @@
 // src/data/projects.ts
 
 export type ProjectTag = string;
+export type ProjectStatus = "live" | "wip";
 
 export type Project = {
   slug: string;
@@ -9,6 +10,7 @@ export type Project = {
   longDescription: string;
   role?: string;
   year?: string;
+  status?: ProjectStatus; // "live" | "wip" (opcional para não quebrar nada)
   tags: readonly ProjectTag[];
   highlights: string[];
   links: {
@@ -26,6 +28,7 @@ export const projects: Project[] = [
       "Projeto focado em componentização, estado e UX. Permite criar colunas e cartões, mover tarefas e manter os dados persistidos no navegador. Construído pensando em responsividade e acessibilidade.",
     role: "Frontend",
     year: "2026",
+    status: "wip",
     tags: ["Next.js", "TypeScript", "Tailwind"],
     highlights: [
       "Arquitetura de componentes reutilizáveis",
@@ -33,7 +36,7 @@ export const projects: Project[] = [
       "UI responsiva e acessível",
     ],
     links: {
-      // Recomendo preencher apenas com links reais
+      // Preencha apenas quando estiver pronto
       // demo: "https://...",
       // repo: "https://github.com/...",
     },
@@ -46,6 +49,7 @@ export const projects: Project[] = [
       "Landing page moderna com seções bem definidas, layout responsivo e CTA claros. O objetivo foi treinar hierarquia visual, espaçamento e consistência de design com Tailwind.",
     role: "Frontend",
     year: "2026",
+    status: "wip",
     tags: ["React", "Tailwind", "UI"],
     highlights: [
       "Layout mobile-first",
@@ -72,43 +76,39 @@ if (process.env.NODE_ENV !== "production") {
   const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
   for (const p of projects) {
-    // slug único
     if (seen.has(p.slug)) {
       throw new Error(`Slug duplicado em projects.ts: "${p.slug}"`);
     }
     seen.add(p.slug);
 
-    // slug válido (kebab-case)
     if (!slugRegex.test(p.slug)) {
       throw new Error(
         `Slug inválido em projects.ts: "${p.slug}". Use kebab-case (ex: "meu-projeto").`
       );
     }
 
-    // campos essenciais
-    if (!p.title?.trim()) {
-      throw new Error(`Projeto "${p.slug}" está sem title.`);
-    }
-
-    if (!p.description?.trim()) {
+    if (!p.title?.trim()) throw new Error(`Projeto "${p.slug}" está sem title.`);
+    if (!p.description?.trim())
       throw new Error(`Projeto "${p.slug}" está sem description.`);
-    }
-
-    if (!p.longDescription?.trim()) {
+    if (!p.longDescription?.trim())
       throw new Error(`Projeto "${p.slug}" está sem longDescription.`);
-    }
 
-    // highlights não vazio (melhora página de detalhe)
     if (!Array.isArray(p.highlights) || p.highlights.length === 0) {
       throw new Error(`Projeto "${p.slug}" precisa de pelo menos 1 highlight.`);
     }
 
-    // tags não vazio (opcional mas recomendado)
     if (!Array.isArray(p.tags) || p.tags.length === 0) {
       throw new Error(`Projeto "${p.slug}" precisa de pelo menos 1 tag.`);
     }
 
-    // links válidos (se existirem)
+    // status válido, se existir
+    if (p.status && p.status !== "live" && p.status !== "wip") {
+      throw new Error(
+        `Status inválido no projeto "${p.slug}". Use "live" ou "wip".`
+      );
+    }
+
+    // links válidos, se existirem
     if (p.links.demo && !p.links.demo.startsWith("http")) {
       throw new Error(
         `Link demo inválido no projeto "${p.slug}". Deve começar com http/https.`

@@ -19,15 +19,42 @@ export function generateMetadata({ params }: Props): Metadata {
   const project = getProjectBySlug(params.slug);
   if (!project) return { title: "Projeto não encontrado | Pedro Santos" };
 
+  const title = `${project.title} — Pedro Santos`;
+
   return {
-    title: `${project.title} | Pedro Santos`,
+    title,
     description: project.description,
+    alternates: {
+      canonical: `/projetos/${project.slug}`,
+    },
+    openGraph: {
+      title,
+      description: project.description,
+      url: `/projetos/${project.slug}`,
+      type: "article",
+      images: [
+        {
+          url: "/opengraph-image.png",
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: project.description,
+      images: ["/opengraph-image.png"],
+    },
   };
 }
 
 export default function ProjectPage({ params }: Props) {
   const project = getProjectBySlug(params.slug);
   if (!project) notFound();
+
+  const isWip = project.status === "wip";
 
   return (
     <PageEnter className="space-y-10">
@@ -39,12 +66,26 @@ export default function ProjectPage({ params }: Props) {
                 {project.year}
               </span>
             ) : null}
+
             {project.role ? (
               <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1">
                 {project.role}
               </span>
             ) : null}
+
+            {isWip ? (
+              <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-amber-200">
+                Em desenvolvimento
+              </span>
+            ) : null}
           </div>
+
+          {isWip ? (
+            <div className="rounded-2xl border border-amber-500/20 bg-amber-500/10 p-4 text-sm text-amber-100">
+              Este projeto ainda está em desenvolvimento. A página será atualizada com
+              detalhes técnicos, demo e repositório assim que estiver finalizado.
+            </div>
+          ) : null}
 
           <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             {project.title}
@@ -56,7 +97,10 @@ export default function ProjectPage({ params }: Props) {
 
           <div className="flex flex-wrap gap-2 pt-1 text-xs text-zinc-200">
             {project.tags.map((t) => (
-              <span key={t} className="rounded-full border border-white/10 bg-black/20 px-3 py-1">
+              <span
+                key={t}
+                className="rounded-full border border-white/10 bg-black/20 px-3 py-1"
+              >
                 {t}
               </span>
             ))}
@@ -70,7 +114,7 @@ export default function ProjectPage({ params }: Props) {
               Voltar para projetos
             </Link>
 
-            {project.links.demo ? (
+            {!isWip && project.links.demo ? (
               <a
                 href={project.links.demo}
                 target="_blank"
@@ -81,7 +125,7 @@ export default function ProjectPage({ params }: Props) {
               </a>
             ) : null}
 
-            {project.links.repo ? (
+            {!isWip && project.links.repo ? (
               <a
                 href={project.links.repo}
                 target="_blank"

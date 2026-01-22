@@ -1,28 +1,34 @@
-// src/components/ProjectCard.tsx
-
 import Link from "next/link";
 import type { Project } from "@/data/projects";
 
 export default function ProjectCard({ project }: { project: Project }) {
-  return (
-    <article
-      className="group rounded-2xl border border-white/10 bg-white/5 p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-white/15 hover:bg-white/7 hover:shadow-md focus-within:ring-2 focus-within:ring-white/20"
-      aria-label={`Projeto ${project.title}`}
-    >
-      <div className="space-y-4">
-        <div className="space-y-1">
-          <Link
-            href={`/projetos/${project.slug}`}
-            className="inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-white outline-none"
-            aria-label={`Ver detalhes do projeto ${project.title}`}
-          >
-            {project.title}
-            <span className="text-zinc-400 transition group-hover:translate-x-0.5 group-hover:text-zinc-200">
-              →
-            </span>
-          </Link>
+  const isWip = project.status === "wip";
 
-          <p className="text-sm leading-relaxed text-zinc-300">{project.description}</p>
+  return (
+    <article className="group rounded-2xl border border-white/10 bg-white/5 p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-white/15 hover:bg-white/7 hover:shadow-md">
+      <div className="space-y-4">
+        <div className="flex items-start justify-between gap-3">
+          <div className="space-y-1">
+            <Link
+              href={`/projetos/${project.slug}`}
+              className="inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-white"
+            >
+              {project.title}
+              <span className="text-zinc-400 transition group-hover:translate-x-0.5 group-hover:text-zinc-200">
+                →
+              </span>
+            </Link>
+
+            <p className="text-sm leading-relaxed text-zinc-300">
+              {project.description}
+            </p>
+          </div>
+
+          {isWip ? (
+            <span className="shrink-0 rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs text-zinc-200">
+              Em desenvolvimento
+            </span>
+          ) : null}
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -41,25 +47,25 @@ export default function ProjectCard({ project }: { project: Project }) {
             href={`/projetos/${project.slug}`}
             className="font-medium text-white underline decoration-white/20 underline-offset-4 hover:decoration-white/60"
           >
-            Ver detalhes
+            {isWip ? "Em breve" : "Ver detalhes"}
           </Link>
 
-          {project.links.demo ? (
+          {!isWip && project.links.demo ? (
             <a
               href={project.links.demo}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noreferrer"
               className="text-zinc-300 underline decoration-white/15 underline-offset-4 hover:text-white hover:decoration-white/60"
             >
               Demo
             </a>
           ) : null}
 
-          {project.links.repo ? (
+          {!isWip && project.links.repo ? (
             <a
               href={project.links.repo}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noreferrer"
               className="text-zinc-300 underline decoration-white/15 underline-offset-4 hover:text-white hover:decoration-white/60"
             >
               Repositório
