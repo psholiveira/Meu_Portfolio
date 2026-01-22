@@ -29,7 +29,7 @@ export default function Home() {
 
                 <p className="max-w-2xl text-base leading-relaxed text-zinc-300">
                   Sou <span className="font-medium text-white">Pedro Santos</span>, desenvolvedor{" "}
-                  <span className="font-medium text-white">Full Stack</span> em formação, com foco em criar aplicações
+                  <span className="font-medium text-white">Full Stack</span>, com foco em criar aplicações
                   escaláveis, APIs bem definidas e interfaces modernas, cuidando da lógica do backend até a experiência final do usuário.
                 </p>
               </div>
@@ -137,14 +137,14 @@ export default function Home() {
             <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
                 className="w-fit rounded-xl bg-white px-4 py-2 text-sm font-medium text-black hover:bg-zinc-100"
-                href="mailto:seuemail@exemplo.com"
+                href="mailto:pedroholiveira15@gmail.com"
               >
-                seuemail@exemplo.com
+                pedroholiveira15@gmail.com
               </a>
 
               <a
                 className="w-fit rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
-                href="https://github.com/seuusuario"
+                href="https://github.com/psholiveira"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -153,7 +153,7 @@ export default function Home() {
 
               <a
                 className="w-fit rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
-                href="https://www.linkedin.com/in/seuusuario"
+                href="https://www.linkedin.com/in/pedro-oliveira-052516279/"
                 target="_blank"
                 rel="noreferrer"
               >
