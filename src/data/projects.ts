@@ -8,6 +8,14 @@ export type Project = {
   title: string;
   description: string;
   longDescription: string;
+  caseStudy?: {
+    problem: string;
+    solution: string[];
+    features?: string[];
+    stack?: string[];
+    technicalDecisions?: {title: string; description: string}[];
+    nextSteps?: string[];
+  }
   role?: string;
   year?: string;
   status?: ProjectStatus; // "live" | "wip" (opcional para não quebrar nada)
@@ -60,8 +68,48 @@ export const projects: Project[] = [
       // demo: "https://...",
       // repo: "https://github.com/...",
     },
+    caseStudy: {
+      problem:
+        "Times pequenos precisam organizar tarefas com clareza sem depender de ferramentas complexas.",
+
+        solution: [
+          "Implementei um board estilo Kanban com colunas e cards.",
+          "Permiti criar, mover e concluir tarefas com poucos cliques.",
+          "Usei persistência local para manter os dados no navegador.",
+        ],
+
+        features: [
+          "CRUD de tarefas",
+          "Movimentação entre colunas",
+          "Persistência com localStorage",
+          "Layout responsivo",
+        ],
+
+        stack: ["Next.js", "TypeScript", "Tailwind"],
+
+        technicalDecisions: [
+          {
+            title: "Persistência local",
+            description:
+              "Optei por LocalStorage para simplificar o projeto e eliminar a depedência de backend.",
+          },
+          {
+            title: "Componentização",
+            description:
+              "Componentes pequenos e reutilizáveis facilitam manutenção e evolução do projeto.",
+          },
+        ],
+
+        nextSteps: [
+          "Adicionar autenticação",
+          "Persistir dados em banco",
+          "Criar testes automatizados",
+        ],
+    },
   },
 ];
+
+    
 
 // Helpers (fonte única)
 export const projectSlugs = projects.map((p) => p.slug);

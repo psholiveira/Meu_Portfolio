@@ -55,6 +55,7 @@ export default function ProjectPage({ params }: Props) {
   if (!project) notFound();
 
   const isWip = project.status === "wip";
+  const cs = project.caseStudy;
 
   return (
     <PageEnter className="space-y-10">
@@ -152,6 +153,85 @@ export default function ProjectPage({ params }: Props) {
           </ul>
         </section>
       </FadeInView>
+      {cs ? (
+  <FadeInView>
+    <section className="space-y-8 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-sm sm:p-10">
+      <h2 className="text-xl font-semibold tracking-tight text-white">
+        Case Study
+      </h2>
+
+      <div className="space-y-2">
+        <h3 className="text-base font-semibold text-white">Problema</h3>
+        <p className="text-sm leading-relaxed text-zinc-300">{cs.problem}</p>
+      </div>
+
+      <div className="space-y-2">
+        <h3 className="text-base font-semibold text-white">Solução</h3>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-zinc-300">
+          {cs.solution.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </div>
+
+      {cs.features?.length ? (
+        <div className="space-y-2">
+          <h3 className="text-base font-semibold text-white">Features</h3>
+          <ul className="list-disc space-y-2 pl-5 text-sm text-zinc-300">
+            {cs.features.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {cs.stack?.length ? (
+        <div className="space-y-2">
+          <h3 className="text-base font-semibold text-white">Stack</h3>
+          <div className="flex flex-wrap gap-2 pt-1 text-xs text-zinc-200">
+            {cs.stack.map((tech) => (
+              <span
+                key={tech}
+                className="rounded-full border border-white/10 bg-black/20 px-3 py-1"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {cs.technicalDecisions?.length ? (
+        <div className="space-y-2">
+          <h3 className="text-base font-semibold text-white">Decisões técnicas</h3>
+          <div className="space-y-3">
+            {cs.technicalDecisions.map((d) => (
+              <div
+                key={d.title}
+                className="rounded-2xl border border-white/10 bg-black/20 p-4"
+              >
+                <p className="font-medium text-white">{d.title}</p>
+                <p className="mt-1 text-sm text-zinc-300">{d.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {cs.nextSteps?.length ? (
+        <div className="space-y-2">
+          <h3 className="text-base font-semibold text-white">Próximos passos</h3>
+          <ul className="list-disc space-y-2 pl-5 text-sm text-zinc-300">
+            {cs.nextSteps.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </section>
+  </FadeInView>
+) : null}
+
     </PageEnter>
   );
 }
