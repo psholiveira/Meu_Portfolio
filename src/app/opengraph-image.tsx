@@ -16,11 +16,11 @@ export default function OpenGraphImage() {
           justifyContent: "space-between",
           padding: 64,
           color: "#fff",
-          background:
+          backgroundColor: "#070A10",
+          backgroundImage:
             "radial-gradient(900px 600px at 20% 0%, rgba(56,189,248,0.20), transparent 60%)," +
             "radial-gradient(700px 480px at 80% 10%, rgba(168,85,247,0.18), transparent 55%)," +
-            "radial-gradient(900px 600px at 50% 120%, rgba(34,197,94,0.14), transparent 55%)," +
-            "#070A10",
+            "radial-gradient(900px 600px at 50% 120%, rgba(34,197,94,0.14), transparent 55%)",
         }}
       >
         {/* Topo */}
@@ -53,7 +53,7 @@ export default function OpenGraphImage() {
         </div>
 
         {/* Meio */}
-        <div style={{ maxWidth: 980 }}>
+        <div style={{ display: "flex", flexDirection: "column", maxWidth: 980 }}>
           <div style={{ fontSize: 62, fontWeight: 900, lineHeight: 1.05 }}>
             Portfólio
           </div>
