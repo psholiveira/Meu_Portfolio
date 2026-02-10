@@ -52,7 +52,31 @@ export function generateMetadata({ params }: Props): Metadata {
 
 export default function ProjectPage({ params }: Props) {
   const project = getProjectBySlug(params.slug);
-  if (!project) notFound();
+  if (!project) {
+  return (
+    <div className="mx-auto max-w-4xl px-4 py-10 text-white">
+      <h1 className="text-2xl font-semibold">Projeto não encontrado</h1>
+      <p className="mt-2 text-zinc-300">
+        Slug recebido: <b>{params.slug}</b>
+      </p>
+
+      <p className="mt-6 text-zinc-300">Slugs disponíveis no deploy:</p>
+      <ul className="mt-2 list-disc pl-5 text-zinc-300">
+        {projectSlugs.map((s) => (
+          <li key={s}>{s}</li>
+        ))}
+      </ul>
+
+      <Link
+        href="/#projetos"
+        className="mt-8 inline-block rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
+      >
+        Voltar para projetos
+      </Link>
+    </div>
+  );
+}
+
 
   const isWip = project.status === "wip";
   const cs = project.caseStudy;
